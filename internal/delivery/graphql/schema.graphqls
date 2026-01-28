@@ -1,0 +1,30 @@
+scalar Upload
+
+type ToDo {
+  id: ID!
+  description: String!
+  file_id: String!
+  due_date: String!
+}
+
+type File {
+  id: ID!
+}
+
+type Query {
+  todos: [ToDo!]!
+}
+
+type Mutation {
+  createTodo(
+    description: String!
+    file_id: String!
+    due_date: String!
+  ): ToDo!
+
+  uploadFile(
+    file: Upload!
+  ): File!
+
+}
+

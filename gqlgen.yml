@@ -1,0 +1,19 @@
+schema:
+  - internal/delivery/graphql/schema.graphqls
+
+exec:
+  filename: internal/delivery/graphql/generated.go
+  package: graphql
+
+model:
+  filename: internal/delivery/graphql/models_gen.go
+  package: graphql
+
+resolver:
+  layout: follow-schema
+  dir: internal/delivery/graphql
+  package: graphql
+
+models:
+  Upload:
+    model: github.com/99designs/gqlgen/graphql.Upload

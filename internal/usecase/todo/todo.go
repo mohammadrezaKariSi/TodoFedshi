@@ -5,14 +5,14 @@ import (
 	"context"
 )
 
-type ListUsers struct {
+type ListToDos struct {
 	repo domain.Repository
 }
 
-func NewListUsers(repo domain.Repository) *ListUsers {
-	return &ListUsers{repo: repo}
+func NewListTodos(repo domain.Repository) *ListToDos {
+	return &ListToDos{repo: repo}
 }
 
-func (uc *ListUsers) Execute(ctx context.Context) ([]*domain.ToDo, error) {
+func (uc *ListToDos) Execute(ctx context.Context) ([]*domain.ToDo, error) {
 	return uc.repo.List(ctx)
 }
