@@ -1,12 +1,16 @@
-package hitrix
+package hitrixapp
 
 import "github.com/coretrix/hitrix"
 
-func New() *hitrix.App {
-	app := hitrix.NewApp()
+func New() (*hitrix.Hitrix, func()) {
+	registry := hitrix.New(
+		"TodoSimpleProject",
+		"your-secret",
+	)
 
-	// register entities
-	app.RegisterEntity(&beeorm.UserEntity{})
+	// Example (optional):
+	// registry.RegisterConfigPath("./configs")
 
-	return app
+	app, cleanup := registry.Build()
+	return app, cleanup
 }
