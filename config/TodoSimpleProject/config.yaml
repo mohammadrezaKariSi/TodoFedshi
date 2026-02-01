@@ -1,0 +1,6 @@
+orm:
+  default:
+    mysql: "todo_user:todo_pass@tcp(localhost:3306)/tododb?multiStatements=true&parseTime=true"
+    redis: "localhost:6379"
+    locker: default
+    local_cache: 1000

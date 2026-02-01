@@ -13,6 +13,11 @@ func NewListTodos(repo domain.Repository) *ListToDos {
 	return &ListToDos{repo: repo}
 }
 
+func (uc *ListToDos) CreateTodo(ctx context.Context, inp *domain.ToDo) (*domain.ToDo, error) {
+	todo, err := uc.repo.Create(ctx, inp.Description, inp.FileID)
+	return todo, err
+}
+
 func (uc *ListToDos) Execute(ctx context.Context) ([]*domain.ToDo, error) {
 	return uc.repo.List(ctx)
 }

@@ -5,28 +5,34 @@ import (
 	hitrixapp "awesomeProject1/internal/infrastructure/hitrix"
 	beeinfra "awesomeProject1/internal/infrastructure/persistence/beeorm"
 	"awesomeProject1/internal/usecase/todo"
+	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/coretrix/hitrix/service"
+	"github.com/coretrix/hitrix/service/registry"
 	"github.com/gin-gonic/gin"
-	"github.com/latolukasz/beeorm"
 )
 
 func main() {
 	app, cleanup := hitrixapp.New()
 	defer cleanup()
 
-	app.RegisterService(&beeorm.MySQLPool{
-		DSN:          "todo_user:todo_pass@tcp(localhost:3306)/tododb?charset=utf8mb4&parseTime=True&loc=UTC",
-		MaxIdleConns: 10,
-		MaxOpenConns: 100,
-		MaxLifetime:  time.Hour,
-		Alias:        "default",
-	})
+	registry.ServiceProviderConfigDirectory("./config")
 
-	todoRepo := beeinfra.NewTodoRepository()
+	service.DI().Config()
+
+	var ormEngine = service.DI().OrmEngine()
+
+	alters := ormEngine.GetAlters()
+
+	for _, alter := range alters {
+		fmt.Printf("🛠 Applying change: %s\n", alter.SQL)
+		alter.Exec()
+	}
+
+	todoRepo := beeinfra.NewTodoRepository(ormEngine)
 	todoUC := todo.NewListTodos(todoRepo)
 
 	resolver := &graphql.Resolver{
@@ -55,7 +61,6 @@ func main() {
 					"status": "ok",
 				})
 			})
-
 		},
 	)
 }

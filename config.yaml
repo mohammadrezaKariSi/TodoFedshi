@@ -1,0 +1,10 @@
+app:
+  mode: local
+
+mysql:
+  default:
+    uri: "todo_user:todo_pass@tcp(localhost:3306)/tododb?multiStatements=true&parseTime=true"
+
+redis:
+  default:
+    host: "localhost:6379"
