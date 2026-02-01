@@ -21,7 +21,7 @@ func main() {
 	app, cleanup := hitrixapp.New()
 	defer cleanup()
 
-	app.RunBackgroundProcess(func(b *hitrix.BackgroundProcessor) {
+	go app.RunBackgroundProcess(func(b *hitrix.BackgroundProcessor) {
 		b.RunScript(&scripts.TodoScript{})
 	})
 

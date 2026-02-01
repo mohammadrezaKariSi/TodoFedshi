@@ -2,6 +2,7 @@ package scripts
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/coretrix/hitrix/service/component/app"
@@ -15,7 +16,7 @@ func (t TodoScript) Description() string {
 }
 
 func (t TodoScript) Run(ctx context.Context, exit app.IExit, ormService *beeorm.Engine) {
-
+	fmt.Println("script is running")
 }
 
 func (t TodoScript) Unique() bool {
