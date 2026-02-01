@@ -4,12 +4,14 @@ import (
 	"awesomeProject1/internal/delivery/graphql"
 	hitrixapp "awesomeProject1/internal/infrastructure/hitrix"
 	beeinfra "awesomeProject1/internal/infrastructure/persistence/beeorm"
+	"awesomeProject1/internal/scripts"
 	"awesomeProject1/internal/usecase/todo"
 	"fmt"
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/coretrix/hitrix"
 	"github.com/coretrix/hitrix/service"
 	"github.com/coretrix/hitrix/service/registry"
 	"github.com/gin-gonic/gin"
@@ -18,6 +20,10 @@ import (
 func main() {
 	app, cleanup := hitrixapp.New()
 	defer cleanup()
+
+	app.RunBackgroundProcess(func(b *hitrix.BackgroundProcessor) {
+		b.RunScript(&scripts.TodoScript{})
+	})
 
 	registry.ServiceProviderConfigDirectory("./config")
 

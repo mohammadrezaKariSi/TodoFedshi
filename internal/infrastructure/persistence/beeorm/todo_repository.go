@@ -9,8 +9,8 @@ import (
 )
 
 type ToDoEntity struct {
-	beeorm.ORM  `orm:"table=todos"`
-	ID          int64     `orm:"id"`
+	beeorm.ORM  `orm:"table=todos;dirty"`
+	ID          uint64    `orm:"id"`
 	Description string    `orm:"description"`
 	DueDate     time.Time `orm:"due_date"`
 	FileID      string    `orm:"file_id"`

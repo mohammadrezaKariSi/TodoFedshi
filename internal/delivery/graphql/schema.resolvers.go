@@ -34,7 +34,7 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, description string, f
 	}
 
 	return &ToDo{
-		ID:          strconv.FormatInt(todo.ID, 10),
+		ID:          strconv.FormatUint(todo.ID, 10),
 		Description: todo.Description,
 		FileID:      todo.FileID,
 		DueDate:     todo.DueDate.String(),
@@ -57,7 +57,7 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*ToDo, error) {
 
 	for _, item := range list {
 		todos = append(todos, &ToDo{
-			ID:          strconv.FormatInt(item.ID, 10),
+			ID:          strconv.FormatUint(item.ID, 10),
 			Description: item.Description,
 			FileID:      item.FileID,
 			DueDate:     item.DueDate.String(),
