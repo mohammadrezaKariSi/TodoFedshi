@@ -2,6 +2,7 @@ package scripts
 
 import (
 	"context"
+	"time"
 
 	"github.com/coretrix/hitrix/service/component/app"
 	"github.com/latolukasz/beeorm"
@@ -19,4 +20,8 @@ func (t TodoScript) Run(ctx context.Context, exit app.IExit, ormService *beeorm.
 
 func (t TodoScript) Unique() bool {
 	return false
+}
+
+func (t TodoScript) Interval() time.Duration {
+	return time.Second * 10
 }
