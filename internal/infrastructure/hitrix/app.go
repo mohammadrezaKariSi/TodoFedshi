@@ -14,12 +14,14 @@ func New() (*hitrix.Hitrix, func()) {
 		"your-secret",
 	)
 
+	r.RegisterRedisPools(&app.RedisPools{Persistent: beeorm.RedisPool})
+
 	r.RegisterDIGlobalService(
 		registry.ServiceProviderErrorLogger(),
 		registry.ServiceProviderConfigDirectory("./config"),
 		registry.ServiceProviderOrmRegistry(beeorm.Init),
 		registry.ServiceProviderOrmEngine(),
-	).RegisterRedisPools(&app.RedisPools{Persistent: "your pool here"})
+	)
 
 	a, cleanup := r.Build()
 	return a, cleanup

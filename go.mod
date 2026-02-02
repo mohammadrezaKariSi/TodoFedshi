@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.86
 	github.com/coretrix/hitrix v1.3.178
 	github.com/gin-gonic/gin v1.9.1
+	github.com/latolukasz/beeorm v1.5.11
 	github.com/vektah/gqlparser/v2 v2.5.31
 )
 
@@ -91,7 +92,6 @@ require (
 	github.com/kevinburke/rest v0.0.0-20210425173428-1fcb8c8e9022 // indirect
 	github.com/kevinburke/twilio-go v0.0.0-20210327194925-1623146bcf73 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
-	github.com/latolukasz/beeorm v1.5.11 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mailjet/mailjet-apiv3-go v0.0.0-20201009050126-c24bc15a9394 // indirect
 	github.com/mailjet/mailjet-apiv3-go/v3 v3.1.1 // indirect

@@ -52,7 +52,7 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateTodo func(childComplexity int, description string, fileID string, dueDate string) int
-		UploadFile func(childComplexity int, file graphql.Upload) int
+		UploadFile func(childComplexity int, file *graphql.Upload) int
 	}
 
 	Query struct {
@@ -69,7 +69,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	CreateTodo(ctx context.Context, description string, fileID string, dueDate string) (*ToDo, error)
-	UploadFile(ctx context.Context, file graphql.Upload) (*File, error)
+	UploadFile(ctx context.Context, file *graphql.Upload) (*File, error)
 }
 type QueryResolver interface {
 	Todos(ctx context.Context) ([]*ToDo, error)
@@ -122,7 +122,7 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UploadFile(childComplexity, args["file"].(graphql.Upload)), true
+		return e.complexity.Mutation.UploadFile(childComplexity, args["file"].(*graphql.Upload)), true
 
 	case "Query.todos":
 		if e.complexity.Query.Todos == nil {
@@ -303,7 +303,7 @@ func (ec *executionContext) field_Mutation_createTodo_args(ctx context.Context, 
 func (ec *executionContext) field_Mutation_uploadFile_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
-	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "file", ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload)
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "file", ec.unmarshalOUpload2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload)
 	if err != nil {
 		return nil, err
 	}
@@ -462,7 +462,7 @@ func (ec *executionContext) _Mutation_uploadFile(ctx context.Context, field grap
 		ec.fieldContext_Mutation_uploadFile,
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.resolvers.Mutation().UploadFile(ctx, fc.Args["file"].(graphql.Upload))
+			return ec.resolvers.Mutation().UploadFile(ctx, fc.Args["file"].(*graphql.Upload))
 		},
 		nil,
 		ec.marshalNFile2ᚖawesomeProject1ᚋinternalᚋdeliveryᚋgraphqlᚐFile,
@@ -2892,22 +2892,6 @@ func (ec *executionContext) marshalNToDo2ᚖawesomeProject1ᚋinternalᚋdeliver
 	return ec._ToDo(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, v any) (graphql.Upload, error) {
-	res, err := graphql.UnmarshalUpload(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, sel ast.SelectionSet, v graphql.Upload) graphql.Marshaler {
-	_ = sel
-	res := graphql.MarshalUpload(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
 func (ec *executionContext) marshalN__Directive2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐDirective(ctx context.Context, sel ast.SelectionSet, v introspection.Directive) graphql.Marshaler {
 	return ec.___Directive(ctx, sel, &v)
 }
@@ -3206,6 +3190,24 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	_ = sel
 	_ = ctx
 	res := graphql.MarshalString(*v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOUpload2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, v any) (*graphql.Upload, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalUpload(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOUpload2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, sel ast.SelectionSet, v *graphql.Upload) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	_ = sel
+	_ = ctx
+	res := graphql.MarshalUpload(*v)
 	return res
 }
 

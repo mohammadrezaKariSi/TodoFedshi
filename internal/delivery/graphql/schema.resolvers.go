@@ -42,7 +42,7 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, description string, f
 }
 
 // UploadFile is the resolver for the uploadFile field.
-func (r *mutationResolver) UploadFile(ctx context.Context, file graphql.Upload) (*File, error) {
+func (r *mutationResolver) UploadFile(ctx context.Context, file *graphql.Upload) (*File, error) {
 	return &File{ID: "1"}, nil
 }
 

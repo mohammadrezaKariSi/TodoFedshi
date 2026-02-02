@@ -23,7 +23,7 @@ type Mutation {
   ): ToDo!
 
   uploadFile(
-    file: Upload!
+    file: Upload
   ): File!
 
 }

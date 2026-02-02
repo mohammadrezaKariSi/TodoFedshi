@@ -2,6 +2,7 @@ package consumers
 
 import (
 	beeorm2 "awesomeProject1/internal/infrastructure/persistence/beeorm"
+	"context"
 	"fmt"
 
 	"github.com/coretrix/hitrix/pkg/queue/streams"
@@ -9,6 +10,7 @@ import (
 )
 
 type DirtyConsumer struct {
+	Ctx context.Context
 }
 
 func (c *DirtyConsumer) Consume(ormService *beeorm.Engine, event beeorm.Event) error {
@@ -25,7 +27,7 @@ func NewDirtyConsumer() *DirtyConsumer {
 }
 
 func (c *DirtyConsumer) GetQueueName() string {
-	return "todo_channel"
+	return beeorm2.ToDoChannel
 }
 
 func (c *DirtyConsumer) GetGroupName(suffix *string) string {

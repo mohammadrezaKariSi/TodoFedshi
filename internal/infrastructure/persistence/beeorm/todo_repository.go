@@ -8,8 +8,14 @@ import (
 	"github.com/latolukasz/beeorm"
 )
 
+const (
+	RedisPool   = "redis_pool"
+	ToDoChannel = "todo_channel"
+	ToDoGroup   = "todo_channel_group"
+)
+
 type ToDoEntity struct {
-	beeorm.ORM  `orm:"table=todos"`
+	beeorm.ORM  `orm:"table=todos;dirty=de"`
 	ID          uint64    `orm:"id"`
 	Description string    `orm:"description"`
 	DueDate     time.Time `orm:"due_date"`
@@ -20,6 +26,8 @@ func Init(registry *beeorm.Registry) {
 	registry.RegisterEntity(
 		&ToDoEntity{},
 	)
+
+	registry.RegisterRedisStream(ToDoChannel, RedisPool, []string{ToDoGroup})
 }
 
 type TodoRepository struct {
@@ -50,12 +58,11 @@ func (r *TodoRepository) List(ctx context.Context) ([]*todo.ToDo, error) {
 	return todos, nil
 }
 
-func (r *TodoRepository) Create(ctx context.Context, description string,
-	fileID string) (*todo.ToDo, error) {
+func (r *TodoRepository) Create(ctx context.Context, inp *todo.ToDo) (*todo.ToDo, error) {
 	entity := &ToDoEntity{
-		Description: description,
-		FileID:      fileID,
-		DueDate:     time.Now().Add(24 * time.Hour),
+		Description: inp.Description,
+		FileID:      inp.FileID,
+		DueDate:     inp.DueDate,
 	}
 
 	r.engine.Flush(entity)

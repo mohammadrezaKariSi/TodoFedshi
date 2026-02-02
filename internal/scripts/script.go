@@ -1,10 +1,11 @@
 package scripts
 
 import (
+	"awesomeProject1/internal/consumers"
 	"context"
-	"fmt"
 	"time"
 
+	"github.com/coretrix/hitrix/pkg/queue"
 	"github.com/coretrix/hitrix/service/component/app"
 	"github.com/latolukasz/beeorm"
 )
@@ -16,7 +17,8 @@ func (t TodoScript) Description() string {
 }
 
 func (t TodoScript) Run(ctx context.Context, exit app.IExit, ormService *beeorm.Engine) {
-	fmt.Println("script is running")
+	queue.NewConsumerRunner(ctx, ormService).RunConsumerOne(
+		&consumers.DirtyConsumer{Ctx: ctx}, nil, 1)
 }
 
 func (t TodoScript) Unique() bool {

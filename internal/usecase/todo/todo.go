@@ -14,7 +14,7 @@ func NewListTodos(repo domain.Repository) *ListToDos {
 }
 
 func (uc *ListToDos) CreateTodo(ctx context.Context, inp *domain.ToDo) (*domain.ToDo, error) {
-	todo, err := uc.repo.Create(ctx, inp.Description, inp.FileID)
+	todo, err := uc.repo.Create(ctx, inp)
 	return todo, err
 }
 
