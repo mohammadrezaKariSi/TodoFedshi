@@ -17,7 +17,7 @@ func (t TodoScript) Description() string {
 }
 
 func (t TodoScript) Run(ctx context.Context, exit app.IExit, ormService *beeorm.Engine) {
-	queue.NewConsumerRunner(ctx, ormService).RunConsumerOne(
+	queue.NewConsumerRunner(ctx, ormService).RunConsumerMany(
 		&consumers.DirtyConsumer{Ctx: ctx}, nil, 1)
 }
 

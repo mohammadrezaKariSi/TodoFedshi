@@ -13,11 +13,13 @@ type DirtyConsumer struct {
 	Ctx context.Context
 }
 
-func (c *DirtyConsumer) Consume(ormService *beeorm.Engine, event beeorm.Event) error {
-	e := &beeorm2.ToDoEntity{}
-	event.Unserialize(e)
+func (c *DirtyConsumer) Consume(ormService *beeorm.Engine, events []beeorm.Event) error {
+	for _, event := range events {
+		e := &beeorm2.ToDoEntity{}
+		event.Unserialize(e)
 
-	fmt.Printf("todo inserted with ID: %+v\n", e.ID)
+		fmt.Println("todo inserted with ID:", e.ID)
+	}
 
 	return nil
 }

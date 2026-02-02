@@ -9,13 +9,13 @@ import (
 )
 
 const (
-	RedisPool   = "redis_pool"
+	RedisPool   = "default"
 	ToDoChannel = "todo_channel"
 	ToDoGroup   = "todo_channel_group"
 )
 
 type ToDoEntity struct {
-	beeorm.ORM  `orm:"table=todos;dirty=de"`
+	beeorm.ORM  `orm:"table=todos;dirty=todo_channel"`
 	ID          uint64    `orm:"id"`
 	Description string    `orm:"description"`
 	DueDate     time.Time `orm:"due_date"`
